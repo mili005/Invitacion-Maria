@@ -1,0 +1,226 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  --seal-x: 50%;
+  --seal-y: 61%;
+  --seal-size: 96px;
+
+  --close-x: 50%;
+  --close-y: 18px;
+  --close-w: 220px;
+  --close-h: 50px;
+}
+
+body {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(180deg, #edd9bd
+ 0%, #e7cfad
+ 100%);
+  font-family: Arial, sans-serif;
+  overflow: hidden;
+}
+
+.scene {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.envelope-wrap {
+  position: relative;
+  width: 360px;
+  height: 520px;
+}
+
+.envelope {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  perspective: 1400px;
+  transform-style: preserve-3d;
+  overflow: hidden;
+  border-radius: 6px;
+  filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.16));
+  transition: transform 0.45s ease, filter 0.45s ease;
+}
+
+/* Sensación de que el sobre se está abriendo */
+.envelope.opening,
+.envelope.open {
+  transform: translateY(-8px) scale(1.02);
+  filter: drop-shadow(0 26px 40px rgba(0, 0, 0, 0.2));
+}
+
+.envelope.closing {
+  transform: translateY(0) scale(1);
+  filter: drop-shadow(0 18px 30px rgba(0, 0, 0, 0.16));
+}
+
+/* Portada cerrada */
+.envelope::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: url("assets/sobre-cerrado.png") center center / cover no-repeat;
+  z-index: 4;
+  pointer-events: none;
+  transition: opacity 0.35s ease, transform 0.45s ease;
+  opacity: 1;
+}
+
+/* Ocultar portada al abrir */
+.envelope.opening::before,
+.envelope.open::before,
+.envelope.closing::before {
+  opacity: 0;
+  transform: scale(1.02);
+}
+
+/* VIDEO INTERIOR */
+.content {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  transform: translateY(10px) scale(0.98);
+  transition: transform 0.45s ease, opacity 0.35s ease;
+  opacity: 0.96;
+}
+
+.envelope.opening .content,
+.envelope.open .content {
+  transform: translateY(0) scale(1);
+  opacity: 1;
+}
+
+.content video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  background: #000;
+}
+
+/* SOLAPAS */
+.flap {
+  position: absolute;
+  left: 0;
+  width: 100%;
+  height: 50%;
+  background: linear-gradient(180deg, #f3dfc2
+ 0%, #e7cda8
+ 100%);
+  transform-origin: top center;
+  transition: transform 0.7s cubic-bezier(.2,.8,.2,1), opacity 0.35s ease;
+  backface-visibility: hidden;
+  z-index: 5;
+}
+
+.flap-1 {
+  top: 0;
+  z-index: 8;
+}
+
+.flap-2 {
+  top: 8px;
+  z-index: 7;
+  opacity: 0.98;
+}
+
+.flap-3 {
+  top: 16px;
+  z-index: 6;
+  opacity: 0.96;
+}
+
+.flap-4 {
+  top: 24px;
+  z-index: 5;
+  opacity: 0.94;
+}
+
+/* CERRADO */
+.envelope.closed .flap {
+  transform: rotateX(0deg);
+}
+
+/* APERTURA 1 x 1 */
+.envelope.step-1 .flap-1 {
+  transform: rotateX(-52deg) translateY(-2px);
+}
+
+.envelope.step-2 .flap-2 {
+  transform: rotateX(-95deg) translateY(-4px);
+}
+
+.envelope.step-3 .flap-3 {
+  transform: rotateX(-138deg) translateY(-6px);
+}
+
+.envelope.step-4 .flap-4 {
+  transform: rotateX(-180deg) translateY(-8px);
+}
+
+/* ESTADO FINAL ABIERTO */
+.envelope.open .flap-1,
+.envelope.open .flap-2,
+.envelope.open .flap-3,
+.envelope.open .flap-4 {
+  transform: rotateX(-180deg);
+}
+
+/* SELLO */
+.seal-hotspot {
+  position: absolute;
+  left: var(--seal-x);
+  top: var(--seal-y);
+  transform: translate(-50%, -50%);
+  width: var(--seal-size);
+  height: var(--seal-size);
+  z-index: 20;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  touch-action: manipulation;
+}
+
+/* CERRAR */
+.close-hotspot {
+  position: absolute;
+  left: var(--close-x);
+  top: var(--close-y);
+  transform: translateX(-50%);
+  width: var(--close-w);
+  height: var(--close-h);
+  z-index: 20;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+  outline: none;
+  opacity: 0;
+  pointer-events: none;
+  touch-action: manipulation;
+}
+
+.envelope.open .close-hotspot {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (max-width: 420px) {
+  .envelope-wrap {
+    width: 92vw;
+    height: calc(92vw * 1.44);
+    max-width: 360px;
+    max-height: 520px;
+  }
+}
