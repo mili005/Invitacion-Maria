@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sobre interactivo</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+
+  <main class="scene">
+    <section class="envelope-wrap">
+      <div class="envelope closed" id="envelope">
+
+        <!-- Contenido interior -->
+        <div class="content">
+          <video id="invitationVideo" autoplay muted playsinline loop>
+            <source src="assets/video-invitacion.mp4" type="video/mp4" />
+          </video>
+        </div>
+
+        <!-- Solapas -->
+        <div class="flap flap-1"></div>
+        <div class="flap flap-2"></div>
+        <div class="flap flap-3"></div>
+        <div class="flap flap-4"></div>
+
+        <!-- Zona clickeable del sello -->
+        <button
+          class="seal-hotspot"
+          id="sealHotspot"
+          aria-label="Tocar el sello para abrir"
+        ></button>
+
+        <!-- Zona clickeable de cerrar -->
+        <button
+          class="close-hotspot"
+          id="closeHotspot"
+          aria-label="Cerrar el sobre"
+        ></button>
+
+      </div>
+    </section>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
