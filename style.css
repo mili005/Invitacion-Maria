@@ -68,7 +68,7 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: url("assets/sobre-cerrado.png") center center / cover no-repeat;
+  background: url("sobre-cerrado.PNG") center center / cover no-repeat;
   z-index: 4;
   pointer-events: none;
   transition: opacity 0.35s ease, transform 0.45s ease;
